@@ -7,23 +7,38 @@ class CriacaoLista extends React.Component {
         select2: "baixo",
         descricao: "",
         btnDisabled: true,
+        arr: [],
     }
 
     handleChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ 
+        this.setState({
             [name]: value,
-            btnDisabled: this.state.inputFormCriacao.trim() === "" && name === "inputFormCriacao" ? true : this.state.btnDisabled 
-        }, () => {
-            if (name === "inputFormCriacao") {
-                this.setState({ btnDisabled: value.trim() === "" });
-            }
+            btnDisabled: name === "inputFormCriacao" && value.trim() === ""
         });
     }
 
     handleAddClick = (event) => {
         event.preventDefault();
-        console.log(this.state);
+        this.setState((prevState) => {
+            const { inputFormCriacao, select1, select2, descricao } = prevState;
+            const newItem = {
+                titulo: inputFormCriacao,
+                categoria: select1,
+                importancia: select2,
+                descricao: descricao.trim() === "" ? "Sem Descrição" : descricao,
+            };
+            const arr = [...prevState.arr, newItem];
+            localStorage.setItem("meuArr", JSON.stringify(arr));
+            return { 
+                arr,
+                inputFormCriacao: "",
+                select1: "teste1",
+                select2: "baixo",
+                descricao: "",
+                btnDisabled: true,
+            };
+        })
     }
 
     handleCancelClick = (event) => {
