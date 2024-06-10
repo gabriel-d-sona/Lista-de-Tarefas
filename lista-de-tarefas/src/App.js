@@ -1,9 +1,9 @@
-import './App.css';
+import CriacaoLista from './pages/CriacaoItem';
 
 function App() {
   return (
     <div className="App">
-      <h1>Test</h1>
+      <CriacaoLista />
     </div>
   );
 }
