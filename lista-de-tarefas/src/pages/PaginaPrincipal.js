@@ -1,16 +1,33 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import TableTarefas from "../componentes/TableTarefas";
 
 class PaginaPrincipal extends React.Component {
     state = {
-        navegate: false,
+        navigate: false,
+        arr: [],
     }
 
+    componentDidMount() {
+        const storedData = JSON.parse(localStorage.getItem("meuArr")) || [];
+        this.setState({ arr: storedData });
+    }
+
+    //Btn para ir para a pagina de criacao de tarefa
     handleClick = () => {
         this.setState({ navigate: true });
     }
+
+    //Cria btn de delete para cada tarefa
+    handleDelete = (index) => {
+        const newArr = [...this.state.arr];
+        newArr.splice(index, 1);
+        this.setState({ arr: newArr });
+        localStorage.setItem("meuArr", JSON.stringify(newArr));
+    }
+
     render() {
-        const { navigate } = this.state;
+        const { navigate, arr } = this.state;
         if (navigate) {
             return <Navigate to="/criacao-de-tarefa" />;
         }
@@ -25,6 +42,7 @@ class PaginaPrincipal extends React.Component {
                         Criar Tarefa
                     </button>
                 </div>
+                <TableTarefas arr={arr} onDelete={this.handleDelete} />
             </div>
         )
     }
