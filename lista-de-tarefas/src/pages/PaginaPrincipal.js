@@ -45,6 +45,15 @@ class PaginaPrincipal extends React.Component {
         }
         return (
             <div className="pagina-principal">
+                <div className="btn-historico">
+                    <button
+                        id="btn-historico"
+                        name="btn-historico"
+                        onClick={this.handleClick}
+                    >
+                        Tarefas Feitas
+                    </button>
+                </div>
                 <div className="btn-criar-tarefa">
                     <button
                         id="btn-criar-tarefa"
