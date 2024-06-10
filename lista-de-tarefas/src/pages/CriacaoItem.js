@@ -1,6 +1,7 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
-class CriacaoLista extends React.Component {
+class CriacaoTarefa extends React.Component {
     state = {
         inputFormCriacao: "",
         select1: "teste1",
@@ -8,6 +9,15 @@ class CriacaoLista extends React.Component {
         descricao: "",
         btnDisabled: true,
         arr: [],
+        navigate: false,
+    }
+
+    componentDidMount() {
+        const storedArr = localStorage.getItem("meuArr");
+        if (storedArr) {
+            const arr = JSON.parse(storedArr);
+            this.setState({ arr }, this.updateQuantities);
+        }
     }
 
     handleChange = (event) => {
@@ -36,24 +46,20 @@ class CriacaoLista extends React.Component {
                 select1: "teste1",
                 select2: "baixo",
                 descricao: "",
-                btnDisabled: true,
+                navigate: true,
             };
         })
     }
 
     handleCancelClick = (event) => {
-        event.preventDefault();
-        this.setState({
-            inputFormCriacao: "",
-            select1: "teste1",
-            select2: "baixo",
-            descricao: "",
-            btnDisabled: true,
-        })
+        this.setState({ navigate: true });
     }
 
     render() {
-        const { inputFormCriacao, select1, select2, descricao, btnDisabled } = this.state;
+        const { inputFormCriacao, select1, select2, descricao, btnDisabled, navigate } = this.state;
+        if (navigate) {
+            return <Navigate to="/" />;
+        }
         return (
             <div>
                 <h1 className="titleCriacao">Criando Item</h1>
@@ -132,4 +138,4 @@ class CriacaoLista extends React.Component {
     }
 }
 
-export default CriacaoLista;
+export default CriacaoTarefa;
