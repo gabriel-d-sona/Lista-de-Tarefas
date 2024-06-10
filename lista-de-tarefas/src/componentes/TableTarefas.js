@@ -2,7 +2,7 @@ import React from "react";
 
 class TableTarefas extends React.Component {
     render() {
-        const { arr, onDelete } = this.props;
+        const { arr, onDelete, onComplete } = this.props;
         if (!arr) {
             return <div>Loading...</div>;
         }
@@ -26,6 +26,9 @@ class TableTarefas extends React.Component {
                                 <td>{item.importancia}</td>
                                 <td>{item.descricao}</td>
                                 <td>
+                                    <button onClick={() => onComplete(index)}>
+                                        Feito
+                                    </button>
                                     <button onClick={() => onDelete(index)}>
                                         Delete
                                     </button>

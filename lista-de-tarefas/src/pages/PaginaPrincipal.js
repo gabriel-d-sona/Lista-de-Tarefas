@@ -26,6 +26,18 @@ class PaginaPrincipal extends React.Component {
         localStorage.setItem("meuArr", JSON.stringify(newArr));
     }
 
+    //Cria btn para armazaner no localStorage completeArr
+    handleComplete = (index) => {
+        const newArr = [...this.state.arr];
+        const completedItem = newArr.splice(index, 1)[0];
+        this.setState({ arr: newArr });
+        localStorage.setItem("meuArr", JSON.stringify(newArr));
+
+        const historicoArr = JSON.parse(localStorage.getItem("historicoArr")) || [];
+        historicoArr.push(completedItem);
+        localStorage.setItem("historicoArr", JSON.stringify(historicoArr));
+    }
+
     render() {
         const { navigate, arr } = this.state;
         if (navigate) {
@@ -42,7 +54,11 @@ class PaginaPrincipal extends React.Component {
                         Criar Tarefa
                     </button>
                 </div>
-                <TableTarefas arr={arr} onDelete={this.handleDelete} />
+                <TableTarefas 
+                    arr={arr}
+                    onDelete={this.handleDelete}
+                    onComplete={this.handleComplete}
+                />
             </div>
         )
     }
