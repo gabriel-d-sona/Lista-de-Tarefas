@@ -1,65 +1,63 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-class CriacaoTarefa extends React.Component {
+class CriacaoItem extends React.Component {
     state = {
         inputFormCriacao: "",
         select1: "teste1",
         select2: "baixo",
         descricao: "",
         btnDisabled: true,
-        arr: [],
         navigate: false,
     }
 
-    componentDidMount() {
-        const storedArr = localStorage.getItem("meuArr");
-        if (storedArr) {
-            const arr = JSON.parse(storedArr);
-            this.setState({ arr }, this.updateQuantities);
-        }
-    }
-
+    //Salva oque foi escrito
     handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({
             [name]: value,
-            btnDisabled: name === "inputFormCriacao" && value.trim() === ""
+            btnDisabled: name === "inputFormCriacao" && value.trim() === "",
         });
     }
 
+    //Btn de adicionar
     handleAddClick = (event) => {
         event.preventDefault();
-        this.setState((prevState) => {
-            const { inputFormCriacao, select1, select2, descricao } = prevState;
-            const newItem = {
-                titulo: inputFormCriacao,
-                categoria: select1,
-                importancia: select2,
-                descricao: descricao.trim() === "" ? "Sem Descrição" : descricao,
-            };
-            const arr = [...prevState.arr, newItem];
-            localStorage.setItem("meuArr", JSON.stringify(arr));
-            return { 
-                arr,
-                inputFormCriacao: "",
-                select1: "teste1",
-                select2: "baixo",
-                descricao: "",
-                navigate: true,
-            };
-        })
+        const { inputFormCriacao, select1, select2, descricao } = this.state;
+        const newItem = {
+            titulo: inputFormCriacao,
+            categoria: select1,
+            importancia: select2,
+            descricao: descricao.trim() === "" ? "Sem Descrição" : descricao,
+        };
+
+        const storedData = JSON.parse(localStorage.getItem("meuArr")) || [];
+        const newArr = [...storedData, newItem];
+        localStorage.setItem("meuArr", JSON.stringify(newArr));
+
+        this.setState({
+            inputFormCriacao: "",
+            select1: "teste1",
+            select2: "baixo",
+            descricao: "",
+            btnDisabled: true,
+            navigate: true,
+        });
     }
 
+    //Btn de cancelar criacao de tarefa
     handleCancelClick = (event) => {
+        event.preventDefault();
         this.setState({ navigate: true });
     }
 
     render() {
         const { inputFormCriacao, select1, select2, descricao, btnDisabled, navigate } = this.state;
+
         if (navigate) {
             return <Navigate to="/" />;
         }
+
         return (
             <div>
                 <h1 className="titleCriacao">Criando Item</h1>
@@ -138,4 +136,4 @@ class CriacaoTarefa extends React.Component {
     }
 }
 
-export default CriacaoTarefa;
+export default CriacaoItem;
