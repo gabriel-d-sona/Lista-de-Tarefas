@@ -4,7 +4,8 @@ import TableTarefas from "../componentes/TableTarefas";
 
 class PaginaPrincipal extends React.Component {
     state = {
-        navigate: false,
+        navigate1: false,
+        navigate2: false,
         arr: [],
     }
 
@@ -13,9 +14,14 @@ class PaginaPrincipal extends React.Component {
         this.setState({ arr: storedData });
     }
 
+    //Btn para ir para a pagina tarefas feitas
+    handleHistoricClick = () => {
+        this.setState({ navigate2: true });
+    }
+
     //Btn para ir para a pagina de criacao de tarefa
-    handleClick = () => {
-        this.setState({ navigate: true });
+    handleCreateClick = () => {
+        this.setState({ navigate1: true });
     }
 
     //Cria btn de delete para cada tarefa
@@ -39,9 +45,12 @@ class PaginaPrincipal extends React.Component {
     }
 
     render() {
-        const { navigate, arr } = this.state;
-        if (navigate) {
+        const { navigate1, navigate2, arr } = this.state;
+        if (navigate1) {
             return <Navigate to="/criacao-de-tarefa" />;
+        }
+        if (navigate2) {
+            return <Navigate to="/tarefas-feitas" />;
         }
         return (
             <div className="pagina-principal">
@@ -49,7 +58,7 @@ class PaginaPrincipal extends React.Component {
                     <button
                         id="btn-historico"
                         name="btn-historico"
-                        onClick={this.handleClick}
+                        onClick={this.handleHistoricClick}
                     >
                         Tarefas Feitas
                     </button>
@@ -58,7 +67,7 @@ class PaginaPrincipal extends React.Component {
                     <button
                         id="btn-criar-tarefa"
                         name="btn-criar-tarefa"
-                        onClick={this.handleClick}
+                        onClick={this.handleCreateClick}
                     >
                         Criar Tarefa
                     </button>
