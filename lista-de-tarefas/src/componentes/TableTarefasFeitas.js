@@ -35,7 +35,7 @@ class TableTarefasFeitas extends React.Component {
                                 </td>
                             </tr>
                         ))}
-                    </tbody>s
+                    </tbody>
                 </table>
             </div>
         )
