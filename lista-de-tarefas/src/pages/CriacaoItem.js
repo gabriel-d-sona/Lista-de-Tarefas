@@ -82,8 +82,16 @@ class CriacaoItem extends React.Component {
                                     value={select1}
                                     onChange={this.handleChange}
                                 >
-                                    <option value="teste1">Teste1</option>
-                                    <option value="teste2">Teste2</option>
+                                    <option value="Trabalho/Profissional">Trabalho/Profissional</option>
+                                    <option value="Estudo/Educação">Estudo/Educação</option>
+                                    <option value="Pessoal">Pessoal</option>
+                                    <option value="Saúde/Fitness">Saúde/Fitness</option>
+                                    <option value="Casa/Manutenção">Casa/Manutenção</option>
+                                    <option value="Finanças">Finanças</option>
+                                    <option value="Social">Social</option>
+                                    <option value="Projetos Específicos">Projetos Específicos</option>
+                                    <option value="Viagens">Viagens</option>
+                                    <option value="Compras">Compras</option>
                                 </select>
                             </div>
                             <div className="divForm">
