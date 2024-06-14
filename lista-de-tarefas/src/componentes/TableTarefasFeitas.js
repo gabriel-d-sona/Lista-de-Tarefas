@@ -2,7 +2,7 @@ import React from "react";
 
 class TableTarefasFeitas extends React.Component {
     render() {
-        const { historicoArr, onDelete, onReturn } = this.props;
+        const { historicoArr, onDeleteClick, onReturn } = this.props;
         if (!historicoArr) {
             return <div>Loading...</div>;
         }
@@ -27,9 +27,9 @@ class TableTarefasFeitas extends React.Component {
                                 <td>{item.descricao}</td>
                                 <td>
                                     <button onClick={() => onReturn(index)}>
-                                        Mover para Tarefas
+                                        Retornar
                                     </button>
-                                    <button onClick={() => onDelete(index)}>
+                                    <button onClick={() => onDeleteClick(index)}>
                                         Delete
                                     </button>
                                 </td>
