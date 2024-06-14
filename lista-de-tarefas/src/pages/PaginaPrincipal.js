@@ -1,12 +1,16 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import TableTarefas from "../componentes/TableTarefas";
+import Modal from "../componentes/Modal";
+import '../CSS/ModalStyle.css';
 
 class PaginaPrincipal extends React.Component {
     state = {
         navigate1: false,
         navigate2: false,
         arr: [],
+        showModal: false,
+        deleteIndex: null,
     }
 
     componentDidMount() {
@@ -14,25 +18,32 @@ class PaginaPrincipal extends React.Component {
         this.setState({ arr: storedData });
     }
 
-    //Btn para ir para a pagina tarefas feitas
     handleHistoricClick = () => {
         this.setState({ navigate2: true });
     }
 
-    //Btn para ir para a pagina de criacao de tarefa
     handleCreateClick = () => {
         this.setState({ navigate1: true });
     }
 
-    //Cria btn de delete para cada tarefa
-    handleDelete = (index) => {
-        const newArr = [...this.state.arr];
-        newArr.splice(index, 1);
-        this.setState({ arr: newArr });
-        localStorage.setItem("meuArr", JSON.stringify(newArr));
+    handleDeleteClick = (index) => {
+        this.setState({ showModal: true, deleteIndex: index });
     }
 
-    //Cria btn para armazaner no localStorage completeArr
+    handleCloseModal = () => {
+        this.setState({ showModal: false, deleteIndex: null });
+    }
+
+    handleConfirmDelete = () => {
+        const { deleteIndex, arr } = this.state;
+        if (deleteIndex !== null) {
+            const newArr = [...arr];
+            newArr.splice(deleteIndex, 1);
+            this.setState({ arr: newArr, showModal: false, deleteIndex: null });
+            localStorage.setItem("meuArr", JSON.stringify(newArr));
+        }
+    }
+
     handleComplete = (index) => {
         const newArr = [...this.state.arr];
         const completedItem = newArr.splice(index, 1)[0];
@@ -45,7 +56,7 @@ class PaginaPrincipal extends React.Component {
     }
 
     render() {
-        const { navigate1, navigate2, arr } = this.state;
+        const { navigate1, navigate2, arr, showModal } = this.state;
         if (navigate1) {
             return <Navigate to="/criacao-de-tarefa" />;
         }
@@ -74,11 +85,16 @@ class PaginaPrincipal extends React.Component {
                 </div>
                 <TableTarefas 
                     arr={arr}
-                    onDelete={this.handleDelete}
+                    onDeleteClick={this.handleDeleteClick}
                     onComplete={this.handleComplete}
                 />
+                <Modal
+                    isOpen={showModal}
+                    onClose={this.handleCloseModal}
+                    onConfirm={this.handleConfirmDelete}
+                />
             </div>
-        )
+        );
     }
 }
 
